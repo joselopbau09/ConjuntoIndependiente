@@ -74,6 +74,9 @@ class Graph:
     def getVertices(self):
         return self.vertDictionery.keys()
 
+    def getNumVertices(self):
+        return self.numVertices
+
     def setPrevious(self,current):                                
         self.previous = current
 
