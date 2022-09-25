@@ -1,6 +1,3 @@
-from dis import dis
-import imp
-
 
 import sys
 
@@ -10,6 +7,8 @@ class Vertice:
         self.adjacent = {}
         # Set distance to infinity for all nodes
         self.distance = sys.maxsize
+
+        self.independiente = False
         # Marked all nodes unvisited 
         self.visted = False
         # Predecessor
@@ -35,6 +34,12 @@ class Vertice:
 
     def setVisited(self):
         self.visted = True
+
+    def getAdjacent(self):
+        return self.adjacent
+
+    def addConjuntoIdependiente(self):
+        self.independiente = True
 
     def __str__(self):
         return f'{str(self.id)} adjacent: {str([x.id for x in self.adjacent])}'                    
@@ -75,28 +80,12 @@ class Graph:
     def getPrevious(self):                                
         return self.previous 
 
-    def getEdges(self):
+    """  def getEdges(self):
         edges = []
-        for v in G:
+        for v in self.vertDictionery.values():
             for w in v.getConnection():
                 vid = v.getverticeId()    
                 wid = w.getverticeId()
                 edges.append((vid, wid))
-        return edges
+        return edges """
 
-if __name__== '__main__':
-    G  = Graph()
-    G.addVertex('a')        
-    G.addVertex('b')        
-    G.addVertex('c')        
-    G.addVertex('d')        
-    G.addVertex('e')
-    G.addEdge('a', 'b')
-    G.addEdge('a','c')
-    G.addEdge('b','e')
-    G.addEdge('c', 'd')
-    G.addEdge('d', 'e')
-
-    print('Graph datos:')
-    print(G.getEdges())
-    
