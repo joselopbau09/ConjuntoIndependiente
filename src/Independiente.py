@@ -1,6 +1,7 @@
 
 from copy import copy
 from Graph import Graph
+import random 
 
 class Independiente:
     
@@ -88,7 +89,12 @@ class Independiente:
             for vertice in self.grafica:
                 if vecinos[j] in vertice.adjacent:
                     vertice.adjacent.pop(vecinos[j])
-            j += 1           
+            j += 1       
+    def seleccionaVeritice(self):
+        vertices = list(self.grafica.vertDictionery.keys())
+        return random.choice(vertices)
+    
+
 
     def imprimeConjuntoInd(self):
         print(self.conjuntoIndependiente)
@@ -107,9 +113,15 @@ if __name__== '__main__':
     G.addEdge('d', 'e')
     G.addEdge('e', 'f')
     
+
     x = Independiente(G)
+    print('Antes de eliminar la vecindad:')
+    print(x.seleccionaVeritice())
 
     x.removerVecindad('d')
+    print('Despues de eliminar la vecindad:')
+    print(x.seleccionaVeritice())
+
 
     """ 
     verticeRemovido = G.vertDictionery.pop('d')
@@ -119,5 +131,5 @@ if __name__== '__main__':
     vecinos2 = G.vertDictionery.pop(listavecinos[1].id)
     print(verticeRemovido.adjacent[vecinos1]) """
 
-    for x in G:
-        print(x.id)
+    """  for x in G:
+        print(x.id) """
