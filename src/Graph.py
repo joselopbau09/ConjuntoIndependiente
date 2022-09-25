@@ -80,12 +80,13 @@ class Graph:
     def getPrevious(self):                                
         return self.previous 
 
-    """  def getEdges(self):
+    def getEdges(self,graph):
         edges = []
-        for v in self.vertDictionery.values():
+        G = graph
+        for v in G:
             for w in v.getConnection():
                 vid = v.getverticeId()    
                 wid = w.getverticeId()
                 edges.append((vid, wid))
-        return edges """
+        return edges
 

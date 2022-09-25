@@ -1,11 +1,13 @@
 
+from copy import copy
 from Graph import Graph
 
 class Independiente:
     
-    def __init__(self):
-        self.grafica = Graph()
+    def __init__(self, graph):
+        self.grafica = graph
         self.conjuntoIndependiente = []
+        self.graficas = []
 
     def trianguloGraph(self, graph):
         for vertices in graph:
@@ -40,13 +42,12 @@ class Independiente:
             candidatos.clear()
         return verticesInd    
     
-    def getVerticesIndependientes(self, graph):
+    def getVerticesIndependientes(self):
         noHayAdjacentes = []
-        self.grafica = graph
         vertices = self.grafica.getVertices()
         
         if (len(vertices) == 3 and self.trianguloGraph(self.grafica)):
-            vertices = list(graph.getVertices())
+            vertices = list(self.graph.getVertices())
             self.grafica.vertDictionery[vertices[0]].addConjuntoIdependiente() 
             self.conjuntoIndependiente.append(self.grafica.vertDictionery[vertices[0]].id)
             return 
@@ -68,23 +69,55 @@ class Independiente:
                 vertice.addConjuntoIdependiente()                
             return    
     
+    def removerVecindad(self, vertice):
+        listaVecinos = []
+        vecinos = []
+        graficaCopia = copy(self.grafica) 
+        self.graficas.append(graficaCopia)
+
+        verticeRemovido = self.grafica.vertDictionery.pop(vertice)
+
+        listaVecinos = list(verticeRemovido.adjacent.keys())
+        i = 0
+        while len(listaVecinos) > i:
+            vecinos.append(self.grafica.vertDictionery.pop(listaVecinos[i].id))
+            i += 1
+
+        j = 0
+        while len(vecinos) > j:
+            for vertice in self.grafica:
+                if vecinos[j] in vertice.adjacent:
+                    vertice.adjacent.pop(vecinos[j])
+            j += 1           
+
     def imprimeConjuntoInd(self):
         print(self.conjuntoIndependiente)
-
                 
 if __name__== '__main__':
     G  = Graph()
     G.addVertex('a')        
-    #G.addVertex('b')        
-    #G.addVertex('c')        
-    #G.addVertex('d')        
-    #G.addVertex('e')
-    #G.addEdge('b', 'a')
-    #G.addEdge('b','c')
-    #G.addEdge('c','a')
-    #G.addEdge('c', 'b')
-    #G.addEdge('d', 'e')
+    G.addVertex('b')        
+    G.addVertex('c')        
+    G.addVertex('d')        
+    G.addVertex('e')
+    G.addVertex('f')
+    G.addEdge('b', 'a')
+    G.addEdge('b','c')
+    G.addEdge('d','c')
+    G.addEdge('d', 'e')
+    G.addEdge('e', 'f')
     
-    x = Independiente()
-    x.getVerticesIndependientes(G)
-    x.imprimeConjuntoInd()                
+    x = Independiente(G)
+
+    x.removerVecindad('d')
+
+    """ 
+    verticeRemovido = G.vertDictionery.pop('d')
+    print(verticeRemovido.adjacent)
+    listavecinos = list(verticeRemovido.adjacent.keys())
+    vecinos1 = G.vertDictionery.pop(listavecinos[0].id)
+    vecinos2 = G.vertDictionery.pop(listavecinos[1].id)
+    print(verticeRemovido.adjacent[vecinos1]) """
+
+    for x in G:
+        print(x.id)
