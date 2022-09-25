@@ -1,5 +1,5 @@
 
-from copy import copy
+import copy
 from Graph import Graph
 import random 
 
@@ -77,12 +77,12 @@ class Independiente:
     def removerVecindad(self, vertice):
         listaVecinos = []
         vecinos = []
-        graficaCopia = copy(self.grafica) 
+        graficaCopia = copy.deepcopy(self.grafica) 
         self.graficas.append(graficaCopia)
 
         verticeRemovido = self.grafica.vertDictionery.pop(vertice)#Objeto Vertice
-        
         listaVecinos = list(verticeRemovido.adjacent.keys())
+        
         if len(listaVecinos) != 0:
             i = 0
             while len(listaVecinos) > i:
@@ -100,22 +100,26 @@ class Independiente:
             if verticeRemovido in self.grafica.vertDictionery[v].adjacent:
                 self.grafica.vertDictionery[v].adjacent.pop(verticeRemovido)
 
-
     def seleccionaVertice(self):
         vertices = list(self.grafica.vertDictionery.keys())
+        if len(vertices) == 0:
+            return -1
         return random.choice(vertices)
 
     def obtencionConjuntoIndependiente(self, graph):
         self.setGrafica(graph) 
-        print(graph.getNumVertices())
-        if graph.getNumVertices() <= 3:
+        nueva = self.grafica
+        tamano = list(self.grafica.vertDictionery.keys())
+        if len(tamano) < 4:
             self.casoBaseConjuntoIndependiente()
+            return
 
         vertice = self.seleccionaVertice()
         self.verticesQuitados.append(vertice)
-        print(self.verticesQuitados)
+
         self.removerVecindad(vertice)
-        self.obtencionConjuntoIndependiente(self.grafica)
+        
+        self.obtencionConjuntoIndependiente(nueva)
 
     def verificaIndependencia(self):
         conjuntoInd = self.conjuntoIndependiente
@@ -126,7 +130,7 @@ class Independiente:
             noAdyacentes = True
             
             for v in conjuntoInd:
-                if vertice in v.adjacent:
+                if vertice in v.adjacent.keys():
                     noAdyacentes = False
                     break
 
@@ -134,7 +138,7 @@ class Independiente:
                 conjuntoInd.append(vertice)
         return conjuntoInd                
 
-    def imprimeConjuntoInd(self):# Corregir metodo
+    def imprimeConjuntoInd(self):
         conjuntoInd = self.verificaIndependencia()
         i = 0
         cadena = '['
@@ -161,9 +165,7 @@ if __name__== '__main__':
     G.addEdge('e', 'f')
     
 
-    x = Independiente( G)
-    print(x.grafica.getEdges(x.grafica))
-    print(x.grafica.vertDictionery.keys())
-    x.removerVecindad('f')
-    print(x.grafica.getEdges(x.grafica))
-    print(x.grafica.vertDictionery.keys())
+    x = Independiente(G)
+
+    x.obtencionConjuntoIndependiente(G)
+    x.imprimeConjuntoInd()
