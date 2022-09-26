@@ -5,13 +5,10 @@ class Vertice:
     def __init__(self, node):
         self.id = node
         self.adjacent = {}
-        # Set distance to infinity for all nodes
         self.distance = sys.maxsize
 
         self.independiente = False
-        # Marked all nodes unvisited 
         self.visted = False
-        # Predecessor
         self.previous = None
 
     def addNeighbor(self, neighbor, weight = 0):    

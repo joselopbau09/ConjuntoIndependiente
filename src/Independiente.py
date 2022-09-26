@@ -52,7 +52,7 @@ class Independiente:
         vertices = self.grafica.getVertices()
         
         if (len(vertices) == 3 and self.trianguloGraph(self.grafica)):
-            vertices = list(self.graph.getVertices())
+            vertices = list(self.grafica.getVertices())
             self.grafica.vertDictionery[vertices[0]].addConjuntoIdependiente() 
             self.conjuntoIndependiente.append(self.grafica.vertDictionery[vertices[0]])
             return 
@@ -137,9 +137,24 @@ class Independiente:
             if noAdyacentes:
                 conjuntoInd.append(vertice)
         return conjuntoInd                
+    
+    def refinacionConjunto(self,conjuntoInd, grafica):
+        conjunto = conjuntoInd
+        for vertices in conjunto:
+            for v in grafica:
+                ady = list(v.adjacent.keys())
+                lista = []
+                for x in ady:
+                    lista.append(x.getverticeId())
+                if vertices.getverticeId() in lista:
+                    if vertices in conjunto:
+                        conjunto.remove(vertices)
+        return conjunto
 
-    def imprimeConjuntoInd(self):
-        conjuntoInd = self.verificaIndependencia()
+
+    def imprimeConjuntoInd(self, grafica):
+        conjunto = self.verificaIndependencia()
+        conjuntoInd = self.refinacionConjunto(conjunto,grafica)
         i = 0
         cadena = '['
         while len(conjuntoInd) > i:
@@ -147,25 +162,3 @@ class Independiente:
             i += 1
         cadena += ']'    
         print(cadena)
-
-        
-                
-if __name__== '__main__':
-    G  = Graph()
-    G.addVertex('a')        
-    G.addVertex('b')        
-    G.addVertex('c')        
-    G.addVertex('d')        
-    G.addVertex('e')
-    G.addVertex('f')
-    G.addEdge('b', 'a')
-    G.addEdge('b','c')
-    G.addEdge('d','c')
-    G.addEdge('d', 'e')
-    G.addEdge('e', 'f')
-    
-
-    x = Independiente(G)
-
-    x.obtencionConjuntoIndependiente(G)
-    x.imprimeConjuntoInd()
