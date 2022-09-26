@@ -3,7 +3,7 @@ import copy
 from Graph import Graph
 import random 
 
-class Independiente:
+class Gestor:
     
     def __init__(self,graph):
         self.grafica = graph
@@ -80,7 +80,7 @@ class Independiente:
         graficaCopia = copy.deepcopy(self.grafica) 
         self.graficas.append(graficaCopia)
 
-        verticeRemovido = self.grafica.vertDictionery.pop(vertice)#Objeto Vertice
+        verticeRemovido = self.grafica.vertDictionery.pop(vertice)
         listaVecinos = list(verticeRemovido.adjacent.keys())
         
         if len(listaVecinos) != 0:

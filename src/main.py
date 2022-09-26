@@ -1,6 +1,6 @@
 
 import copy
-from Independiente import Independiente
+from Gestor import Gestor
 from Graph import Graph
 
 def lecturaArchivo(nombre):
@@ -39,9 +39,9 @@ def main():
     graficaCop2 = copy.deepcopy(grafica2)
     graficaCop3 = copy.deepcopy(grafica3)
 
-    indUno = Independiente(grafica1)
-    indDos = Independiente(grafica2)
-    indTres = Independiente(grafica3)
+    indUno = Gestor(grafica1)
+    indDos = Gestor(grafica2)
+    indTres = Gestor(grafica3)
 
     print('Ejemplos 1:')
     indUno.obtencionConjuntoIndependiente(grafica1)

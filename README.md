@@ -1,38 +1,49 @@
 # José Luis López Bautista
 
-## Num.Cuenta: 31719189-5
-
 El lenguaje de programación: 
-- Java
+- Python3
 
 ## Ejecución
 Para ejecutar el programa se necesita:
-- Java versión 8
+- Python
 
-Para su ejecución se descomprime el archivo de tipo ".zip".
+Se descomprime el archivo de tipo ".zip" luego:
 1. Dirigirse en la terminal a la carpeta src: 
 ```
-MergeTwoSortedLists$
+JoseLuisLopez$
 ```
 2. Ejecutar el comando 
 ```
-javac *.java
+python3 main.py
 ```
-Después se ejecuta el siguiente comando
-```
-java Prueba
-```
+- Para probar con más ejemplos se debe de sustituir los archivos `.txt` por los deceado, pero se debe de manter el nombre. 
 
 ## Justificaión
 
-Notemos que se tiene como precondición que las listas que se reciben están ordenadas de menor a mayor, y como postcondición que 
-se regrese una lista ordenada de menor a mayor con las. Por lo que para resolverlo se  creó una lista vacía en la cual se irá 
-llenando con los elementos de las otras dos, para esto se vieron los siguientes casos: primero se verifica si estas no están 
-vacías en caso de ambas serlo se regresa `null`. Ahora si una de estas es vacía y la otra no se devuelve la que no lo está ya 
-que como sabemos esta está ordenada se cumple la postcondición.
-Por otro lado cuando ninguna de las dos está vacía, lo que hacemos es comparar nodo por nodo el valor de las listas, es decir, 
-si el valor de la primera lista es menor o igual que el de la segunda a la lista que se creó se le asigna el valor de la lista 
-uno, y esta apunta al nodo que se obtiene al hacer recursión la lista dos y con el nodo al que apunta la lista uno, por último 
-tenemos el caso en que el valor del nodo de la lista dos es menor al uno, de manera similar al caso anterior se almacena en la 
-lista creada el valor de la lista dos y este apunta al nodo que se obtiene al hacer recursión con la lista uno y el nodo al que 
-apunta la lista dos. Al finalizar la ejecución se regresa la lista que se creó ordenada de menor a mayor.
+Para la solución del problema se optó por implementar la clase vértice y gráfica, esto se realizó con listas de adyacencias. 
+Luego se decidió implementar una clase gestor que se encargará de simular la búsqueda del conjunto independiente de la gráfica. 
+En esta se decidió tener como atributos de clase un lista en la que almacenan los elementos que pertenecen al conjunto 
+independiente, otra que almacena los vértices de la vecindad que se removió durante la ejecución y una que tendrá una copia de 
+los ejemplares de gráfica cada que se removió la vecindad de un vértice.
+
+Lo primero que se decidió fue implementar un método que resolviera los casos bases del teorema, es decir para un número de 
+vértices menor o igual a tres, para esto se decidió dividir el problema en casos los cuales osn cuando no existen adyacencias, 
+un caso particular para el ciclo del triángulo, y el resto. Para la selección del vértice que se remueve cuando no se está en 
+el caso base, se decidió seleccionar de forma pseudoaleatoria haciendo uso de `Random`.
+
+Ahora para el diseño del método que remueve una vecindad  lo que se hace es realizar una copia de la gráfica antes de remover 
+la vecindad, esta se almacena en su atributo correspondientes. luego lo que se hace es remover de los vértices al que se 
+seleccionó de forma aleatorio, de la misma forma se eliminar sus vértices adjacentes, si este no tiene lo único que se hace es 
+eliminar el “apuntador” de los demás vértices al que se quita. Para el otro caso se quita de la lista a sus vecinos.
+
+Después se tiene el método que se encarga de encontrar el conjunto independiente, para esto se hace uso de los método 
+anteriores en el caso de que cumpla que el número de vértices es menor o igual a 3, se ejecuta el caso base y se obtienen los 
+candidatos para el conjunto independiente. Si no es el caso base se selecciona uno de la gráfica, para después remover su 
+vecindad y ejecutamos recursividad a la gráfica que se obtiene al eliminar la vecindad, hasta llegar al caso base. 
+
+Luego al conjunto candidato y a la gráfica que se obtuvo tras aplicar el método anterior, se le agrega el último vértice que se 
+removió, se verifica si alguno de los candidatos a conjunto independiente es adyacente al removido, si es asi no se agrega a 
+los candidatos  en otro caso si, se ejecuta hasta vaciar la lista de los vértices removidos. Por último se tien un método que 
+verificacion, es decir se revisa si uno de los candidatos del conjunto es adyacentes a un vértice de la gráfica inicial, si es 
+asi se remueve del conjunto.
+
